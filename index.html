@@ -4,15 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080808">
+<meta name="description" content="Welcome to MYWG Studios. Discover our games, meet our community, and explore what's coming next.">
 <title>MYWG Studios | Official Website</title>
 
 <style>
 :root {
   --bg: #080808;
   --panel: #141414;
-  --border: #333;
+  --panel-light: #1b1b1b;
   --white: #fff;
   --muted: #aaa;
+  --cyan: #00eaff;
+  --purple: #b000ff;
+  --pink: #ff00a8;
+  --green: #00ff9d;
+  --rgb: linear-gradient(
+    115deg,
+    #ff0055,
+    #ff9900,
+    #eaff00,
+    #00ff9d,
+    #00eaff,
+    #7b00ff,
+    #ff00a8,
+    #ff0055
+  );
 }
 
 * {
@@ -31,6 +47,19 @@ body {
   color: var(--white);
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 10% 10%, #6200ff10, transparent 45%),
+    radial-gradient(ellipse at 90% 45%, #00eaff0c, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, #ff00a80a, transparent 45%);
 }
 
 button, input {
@@ -41,21 +70,29 @@ button, a {
   -webkit-tap-highlight-color: transparent;
 }
 
+button {
+  cursor: pointer;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-button {
-  cursor: pointer;
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
 }
 
 header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(8,8,8,.96);
-  border-bottom: 1px solid var(--border);
+  background: rgba(8, 8, 8, .92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid #ffffff18;
 }
 
 nav {
@@ -73,10 +110,15 @@ nav {
   font-size: 21px;
   font-weight: 900;
   letter-spacing: -1px;
+  white-space: nowrap;
 }
 
 .logo span {
   color: #888;
+}
+
+.logo:hover {
+  text-shadow: 0 0 18px #00eaff88;
 }
 
 .links {
@@ -88,32 +130,37 @@ nav {
 .links a {
   color: #ccc;
   font-size: 13px;
+  transition: color .2s;
 }
 
 .links a:hover {
-  color: white;
+  color: var(--cyan);
 }
 
 .nav-buttons {
   display: flex;
   gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .btn {
+  position: relative;
   display: inline-block;
   background: #171717;
   color: white;
   border: 1px solid #444;
-  border-radius: 7px;
+  border-radius: 8px;
   padding: 11px 17px;
   font-weight: bold;
   font-size: 13px;
-  transition: .2s;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
 }
 
 .btn:hover {
-  background: #333;
   transform: translateY(-2px);
+  border-color: var(--cyan);
+  box-shadow: 0 0 16px #00eaff30;
 }
 
 .btn-white {
@@ -123,17 +170,51 @@ nav {
 }
 
 .btn-white:hover {
-  background: #ddd;
+  background: #fff;
+  border-color: var(--pink);
+  box-shadow:
+    0 0 10px #ff00a855,
+    0 0 25px #00eaff33;
+}
+
+.btn-rgb {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#101010, #101010) padding-box,
+    var(--rgb) border-box;
+  background-size: 100% 100%, 300% 300%;
+  animation: rgb-flow 7s linear infinite;
+  box-shadow: 0 0 15px #7b00ff22;
+}
+
+.btn-rgb:hover {
+  box-shadow:
+    0 0 12px #00eaff55,
+    0 0 28px #ff00a833;
 }
 
 .hero {
+  position: relative;
   min-height: 570px;
   display: grid;
   place-items: center;
   text-align: center;
   padding: 80px 22px;
-  background: radial-gradient(ellipse at center, #292929, #080808 70%);
-  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse at center, #252525, #080808 70%);
+  border-bottom: 1px solid #ffffff18;
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 20% 40%, #00eaff15, transparent 40%),
+    radial-gradient(ellipse at 80% 60%, #b000ff19, transparent 45%);
+  animation: hero-glow 8s ease-in-out infinite alternate;
 }
 
 .hero-content {
@@ -142,14 +223,8 @@ nav {
 }
 
 @keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .tag {
@@ -163,6 +238,15 @@ nav {
   margin-bottom: 22px;
 }
 
+.tag-rgb {
+  border-color: transparent;
+  background:
+    linear-gradient(#111, #111) padding-box,
+    var(--rgb) border-box;
+  background-size: 100% 100%, 300% 300%;
+  animation: rgb-flow 8s linear infinite;
+}
+
 .hero h1 {
   font-size: clamp(45px, 10vw, 90px);
   line-height: 1;
@@ -174,6 +258,7 @@ nav {
   display: block;
   color: transparent;
   -webkit-text-stroke: 1px white;
+  text-shadow: 0 0 25px #00eaff15;
 }
 
 .hero p {
@@ -228,16 +313,23 @@ section {
 }
 
 .card {
+  position: relative;
   padding: 25px;
   background: var(--panel);
-  border: 1px solid var(--border);
+  border: 1px solid #303030;
   border-radius: 12px;
-  transition: .2s;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
 }
 
 .card:hover {
-  border-color: #888;
-  transform: translateY(-3px);
+  border-color: transparent;
+  background:
+    linear-gradient(var(--panel), var(--panel)) padding-box,
+    var(--rgb) border-box;
+  background-size: 100% 100%, 300% 300%;
+  animation: rgb-flow 7s linear infinite;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px #0008;
 }
 
 .icon {
@@ -279,9 +371,16 @@ section {
   gap: 30px;
   align-items: center;
   padding: 30px;
-  background: var(--panel);
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
   border-radius: 14px;
+  background:
+    linear-gradient(var(--panel), var(--panel)) padding-box,
+    linear-gradient(135deg, #333, #111, #333) border-box;
+  transition: box-shadow .3s;
+}
+
+.featured:hover {
+  box-shadow: 0 0 25px #7b00ff16;
 }
 
 .game-art {
@@ -289,13 +388,14 @@ section {
   display: grid;
   place-content: center;
   text-align: center;
-  background: radial-gradient(circle, #333, #111 70%);
+  background: radial-gradient(circle, #252525, #111 70%);
   border: 1px solid #444;
   border-radius: 10px;
 }
 
 .game-art .emoji {
   font-size: 80px;
+  filter: drop-shadow(0 0 15px #00eaff30);
 }
 
 .game-art strong {
@@ -317,13 +417,36 @@ section {
 .plus-box {
   text-align: center;
   padding: 45px 25px;
-  background: radial-gradient(ellipse at top, #292929, #111 65%);
-  border: 1px solid #555;
+  background:
+    radial-gradient(ellipse at top, #292929, #111 65%);
+  border: 1px solid transparent;
   border-radius: 15px;
+  position: relative;
+  isolation: isolate;
+}
+
+.plus-box::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--rgb);
+  background-size: 300% 300%;
+  animation: rgb-flow 8s linear infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .plus-box .crown {
   font-size: 48px;
+  color: white;
+  text-shadow: 0 0 18px #b000ff88;
 }
 
 .plus-box h2 {
@@ -357,14 +480,14 @@ section {
   gap: 30px;
   align-items: center;
   padding: 30px;
-  border: 1px solid var(--border);
+  border: 1px solid #303030;
   background: #111;
   border-radius: 14px;
 }
 
 .hub-preview {
   background: #080808;
-  border: 1px solid #444;
+  border: 1px solid #333;
   border-radius: 10px;
   padding: 20px;
 }
@@ -386,6 +509,12 @@ section {
   background: #191919;
   border: 1px solid #333;
   border-radius: 7px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.library div:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 15px #00eaff20;
 }
 
 .library span {
@@ -416,6 +545,12 @@ section {
 .mascot-art span {
   font-size: 85px;
   filter: grayscale(1);
+  transition: filter .3s, transform .3s;
+}
+
+.mascot:hover .mascot-art span {
+  filter: grayscale(0);
+  transform: scale(1.07);
 }
 
 .mascot {
@@ -429,7 +564,7 @@ section {
 }
 
 footer {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid #292929;
   padding: 30px 22px;
   color: #999;
   font-size: 12px;
@@ -450,12 +585,19 @@ footer {
   flex-wrap: wrap;
 }
 
+.footer-links a:hover {
+  color: var(--cyan);
+}
+
+/* RGB account window */
+
 .modal {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 50;
-  background: rgba(0,0,0,.85);
+  background: rgba(0,0,0,.86);
+  backdrop-filter: blur(8px);
   padding: 20px;
   align-items: center;
   justify-content: center;
@@ -470,11 +612,30 @@ footer {
   max-width: 410px;
   max-height: 90vh;
   overflow-y: auto;
-  background: #141414;
-  border: 1px solid #555;
-  border-radius: 12px;
+  background: #111;
+  border: 1px solid transparent;
+  border-radius: 14px;
   padding: 27px;
   position: relative;
+  isolation: isolate;
+}
+
+.modal-box::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--rgb);
+  background-size: 300% 300%;
+  animation: rgb-flow 5s linear infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .close {
@@ -485,6 +646,10 @@ footer {
   background: none;
   border: none;
   color: white;
+}
+
+.close:hover {
+  color: var(--pink);
 }
 
 .modal-box h2 {
@@ -510,6 +675,13 @@ footer {
   border: 1px solid #444;
   border-radius: 6px;
   color: white;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.form-input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px #00eaff20;
+  outline: none;
 }
 
 .form-submit {
@@ -517,9 +689,23 @@ footer {
   margin-top: 20px;
 }
 
+.form-submit:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
 .message {
   font-size: 13px;
   margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+
+.message.success {
+  color: var(--green);
+}
+
+.message.error {
+  color: #ff6b83;
 }
 
 .switch {
@@ -532,25 +718,31 @@ footer {
 .switch button {
   background: none;
   border: none;
-  color: white;
+  color: var(--cyan);
   text-decoration: underline;
 }
 
-.warning {
-  margin-top: 17px;
-  padding: 12px;
-  background: #202020;
-  border: 1px solid #444;
-  border-radius: 7px;
-  color: #ccc;
-  font-size: 11px;
+.account-chip {
+  font-size: 12px;
+  color: var(--green);
+  margin-right: 5px;
 }
 
 [hidden] {
   display: none !important;
 }
 
-@media(max-width: 850px) {
+@keyframes rgb-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+@keyframes hero-glow {
+  from { opacity: .45; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 850px) {
   nav {
     justify-content: center;
   }
@@ -564,11 +756,15 @@ footer {
   }
 }
 
-@media(max-width: 600px) {
+@media (max-width: 600px) {
   .grid,
   .featured,
   .hub-box {
     grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: 490px;
   }
 
   .hero h1 {
@@ -584,12 +780,35 @@ footer {
     padding: 20px;
   }
 
+  nav {
+    padding: 14px 12px;
+  }
+
   .nav-buttons .btn {
     padding: 9px 12px;
   }
 
   .logo {
     font-size: 18px;
+  }
+
+  .links {
+    gap: 12px;
+  }
+
+  .links a {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
 }
 </style>
@@ -598,29 +817,29 @@ footer {
 <body>
 
 <header>
-<nav>
-  <a class="logo" href="#home">MYWG <span>STUDIOS.</span></a>
+  <nav>
+    <a class="logo" href="#home">MYWG <span>STUDIOS.</span></a>
 
-  <div class="links">
-    <a href="#home">Home</a>
-    <a href="#games">Games</a>
-    <a href="#plus">MYWG Plus</a>
-    <a href="#hub">MYWG Hub</a>
-    <a href="#about">About Us</a>
-  </div>
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#games">Games</a>
+      <a href="#plus">MYWG Plus</a>
+      <a href="#hub">MYWG Hub</a>
+      <a href="#about">About Us</a>
+    </div>
 
-  <div class="nav-buttons">
-    <button class="btn" onclick="openAccount('login')">Log In</button>
-    <button class="btn btn-white" onclick="openAccount('signup')">Sign Up</button>
-  </div>
-</nav>
+    <div class="nav-buttons" id="navAccount">
+      <button class="btn" onclick="openAccount('login')">Log In</button>
+      <button class="btn btn-rgb" onclick="openAccount('signup')">Sign Up</button>
+    </div>
+  </nav>
 </header>
 
 <main>
 
 <section class="hero" id="home">
   <div class="hero-content">
-    <div class="tag">INDEPENDENT GAME STUDIO</div>
+    <div class="tag tag-rgb">INDEPENDENT GAME STUDIO</div>
 
     <h1>WE MAKE<span>GAMES.</span></h1>
 
@@ -630,32 +849,210 @@ footer {
     </p>
 
     <div class="actions">
-      <a class="btn btn-white" href="#games">Explore Our Games →</a>
+      <a class="btn btn-rgb" href="#games">Explore Our Games →</a>
       <a class="btn" href="#about">Meet the Studio</a>
     </div>
   </div>
 </section>
 
 <section id="games">
-<div class="container">
-  <div class="heading">
-    <small>OUR PROJECTS</small>
-    <h2>Games by MYWG.</h2>
-    <p>Explore our games and follow their development.</p>
-  </div>
-
-  <div class="featured">
-    <div class="game-art">
-      <span class="emoji">🏝️</span>
-      <strong>MINIGAME ISLAND</strong>
+  <div class="container">
+    <div class="heading">
+      <small>OUR PROJECTS</small>
+      <h2>Games by MYWG.</h2>
+      <p>Explore our games and follow their development.</p>
     </div>
 
-    <div>
-      <span class="status">In Development</span>
-      <h3>Welcome to MiniGame Island.</h3>
+    <div class="featured">
+      <div class="game-art">
+        <span class="emoji">🏝️</span>
+        <strong>MINIGAME ISLAND</strong>
+      </div>
+
+      <div>
+        <span class="status">In Development</span>
+        <h3>Welcome to MiniGame Island.</h3>
+        <p>
+          A world of minigames, competitive matches,
+          customisation, and multiplayer fun.
+          Your next adventure starts here.
+        </p>
+        <a class="btn btn-rgb" href="#hub">Explore MYWG Hub →</a>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:20px">
+      <article class="card">
+        <div class="icon">🎮</div>
+        <h3>Future Games</h3>
+        <p>Discover more MYWG projects as they are announced.</p>
+        <span class="status">Coming Soon</span>
+      </article>
+
+      <article class="card">
+        <div class="icon">🚀</div>
+        <h3>New Adventures</h3>
+        <p>Our studio is growing, with room for future ideas.</p>
+        <span class="status">Stay Tuned</span>
+      </article>
+
+      <article class="card">
+        <div class="icon">📰</div>
+        <h3>Studio News</h3>
+        <p>Announcements and development updates will appear here.</p>
+        <span class="status">Coming Soon</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="plus">
+  <div class="container">
+    <div class="plus-box">
+      <div class="crown">✦</div>
+      <div class="tag tag-rgb">MEMBERSHIP</div>
+      <h2>MYWG PLUS</h2>
+
       <p>
-        A world of minigames, competitive matches,
-        customisation, and multiplayer fun.
+        Your membership in the MYWG universe.
+        Join the community and get ready for future perks
+        across supported games.
+      </p>
+
+      <div class="perks">
+        <span>✓ Free for now</span>
+        <span>✓ Member identity</span>
+        <span>✓ Future perks</span>
+      </div>
+
+      <h3 style="font-size:35px">
+        £0 <small style="font-size:14px;color:#aaa">/ for now</small>
+      </h3>
+
+      <p style="font-size:12px">
+        No payments are collected on this website.
+      </p>
+
+      <button class="btn btn-rgb" onclick="openAccount('signup')">
+        Join MYWG
+      </button>
+    </div>
+  </div>
+</section>
+
+<section id="hub">
+  <div class="container">
+    <div class="heading">
+      <small>YOUR GAMES, TOGETHER</small>
+      <h2>Meet MYWG Hub.</h2>
+      <p>Your planned launcher for MYWG Studios games.</p>
+    </div>
+
+    <div class="hub-box">
+      <div class="hub-preview">
+        <h3>MYWG HUB</h3>
+        <div class="library">
+          <div><span>🏝️</span><small>MINIGAME ISLAND</small></div>
+          <div><span>🎮</span><small>MORE GAMES</small></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="status">In Planning</span>
+        <h3>Your MYWG game library.</h3>
+        <p>
+          A dedicated launcher for discovering, downloading,
+          and managing MYWG games, with updates and account integration.
+        </p>
+        <p>
+          <strong>First:</strong> Windows PC<br>
+          <strong>Planned:</strong> Android
+        </p>
+        <button class="btn" disabled>Download Coming Soon</button>
+        <p style="font-size:11px;margin-top:10px">
+          The launcher installer has not been created yet.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="heading">
+      <small>BEHIND THE GAMES</small>
+      <h2>Meet MYWG Studios.</h2>
+    </div>
+
+    <p class="about-text">
+      MYWG Studios is an independent gaming-studio project
+      focused on creating games and building a place for players
+      to discover our projects. We're starting with MiniGame Island
+      and working towards a bigger gaming universe.
+    </p>
+
+    <div class="grid">
+      <article class="card mascot">
+        <div class="mascot-art">
+          <span role="img" aria-label="Temporary avatar">🧑🏻‍💻</span>
+        </div>
+        <h3>OLTonitoYT</h3>
+        <p>The creator behind MYWG Studios, building games and bringing ideas to life.</p>
+        <span class="status">Studio Creator</span>
+      </article>
+
+      <article class="card mascot">
+        <div class="mascot-art">
+          <span role="img" aria-label="Temporary fox mascot">🦊</span>
+        </div>
+        <h3>Lumi Fox</h3>
+        <p>A friendly fox-themed AI mascot helping brainstorm ideas and explore MYWG.</p>
+        <span class="status">AI Mascot</span>
+      </article>
+
+      <article class="card mascot">
+        <div class="mascot-art">
+          <span role="img" aria-label="Game controller">🎮</span>
+        </div>
+        <h3>The Community</h3>
+        <p>Players and supporters joining us on our journey into gaming.</p>
+        <span class="status">Players Welcome</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <strong style="color:white">MYWG STUDIOS.</strong>
+      <p>© <span id="year"></span> MYWG Studios.</p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#games">Games</a>
+      <a href="#plus">MYWG Plus</a>
+      <a href="#hub">MYWG Hub</a>
+      <a href="#about">About Us</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ACCOUNT MODAL -->
+
+<div class="modal" id="accountModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="modalTitle"
+     onclick="outsideClick(event)">
+
+  <div class="modal-box">
+    <button class="close" onclick="closeAccount()" aria-label="Close">&times;</button>
+
+    <h2 id="modalTitle">MYWG Account</h2>
+    <p id="modalDescription">Welcoultiplayer fun.
         Your next adventure starts here.
       </p>
       <a class="btn btn-white" href="#hub">Explore MYWG Hub →</a>
